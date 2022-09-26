@@ -2,13 +2,40 @@
 name = "quantcerebro"
 version = "0.1.0"
 description = ""
+license = "Apache-2.0"
 authors = ["Jacob Tian <olivandertian@yahoo.com>"]
+maintainers = ["Jacob Tian <olivandertian@yahoo.com>"]
+readme = "README.rst"
+packages = [
+    {include = "quantcerebro", from = "src"},
+]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
+
+[tool.poetry.group.docs]
+optional=true
+
+[tool.poetry.group.docs.dependencies]
+Sphinx = "^5.2.1"
+sphinx-autodoc-typehints = "^1.19.2"
+sphinx-autobuild = "^2021.3.14"
+sphinx-rtd-theme = "^1.0.0"
+sphinxcontrib-napoleon = "^0.7"
+toml = "^0.10.2"
+
+
+
+
+[tool.poetry.group.dev.dependencies]
+toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+
+[tool.poetry.scripts]
+poetry = 'poetry.console:run'
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
