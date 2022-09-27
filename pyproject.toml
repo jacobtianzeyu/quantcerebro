@@ -12,6 +12,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
+eventkit = "^0.8.9"
+PyYAML = "^6.0"
 
 [tool.poetry.group.docs]
 optional=true

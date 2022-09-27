@@ -1,1 +1,4 @@
 .idea/
+docs/source/
+docs/make.bat
+docs/Makefile
