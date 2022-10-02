@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from event import EventEmitter
 
+
 class PredecessorNode(ABC):
     # __slots__ = ("registered_interfaces","event_emitter")
     logger = logging.getLogger(__name__)
@@ -16,6 +17,7 @@ class PredecessorNode(ABC):
         self.name = ""
         self.implemented_interfaces: Dict[ str , SuccessorNode ] = dict()
         self.event_emitter = EventEmitter()
+        self._consolidate_implemented_interfaces()
 
     @abstractmethod
     def init_model(self, config: NodeConfig):
@@ -29,11 +31,18 @@ class PredecessorNode(ABC):
         # self.events[event_name] += event_handler
         self.event_emitter.add_listener(event_name , event_handler)
 
+    def get_event(self,event_name:str):
+        return self.event_emitter.events[event_name]
+
     def notify_handlers(self, event_name:str, msg: Any):
         # for k, v in self.event_emitter.events.items():
         #     if msg.__class__ == v:
         #         v.emit(msg)
         self.event_emitter.emit(event_name,msg)
+
+    @abstractmethod
+    def _consolidate_implemented_interfaces(self) -> None:
+        raise NotImplementedError
 
 
 class SuccessorNode(ABC):
@@ -43,10 +52,9 @@ class SuccessorNode(ABC):
     def __init__(self):
         super(SuccessorNode,self).__init__()
         self.name = ""
-        self.event_handlers: Dict[ str , Callable ] = dict()
+        self.implemented_event_handlers: Dict[ str , Callable ] = dict()
         self.registered_interfaces: Dict[str, Any] = dict()
-        self._consolidate_implemented_interfaces()
-        self._consolidate_handlers()
+        self._consolidate_implemented_handlers()
 
     @abstractmethod
     def init_model(self , config: NodeConfig):
@@ -56,11 +64,7 @@ class SuccessorNode(ABC):
         self.registered_interfaces[interface_name] = interface
 
     @abstractmethod
-    def _consolidate_implemented_interfaces(self) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def _consolidate_handlers(self):
+    def _consolidate_implemented_handlers(self):
         raise NotImplementedError
 
 
@@ -82,9 +86,8 @@ class Node(SuccessorNode, PredecessorNode):
     def _consolidate_implemented_interfaces(self) -> None:
         raise NotImplementedError
 
-    def _consolidate_handlers(self) -> None:
+    def _consolidate_implemented_handlers(self) -> None:
         raise NotImplementedError
-
 
 
 @dataclass

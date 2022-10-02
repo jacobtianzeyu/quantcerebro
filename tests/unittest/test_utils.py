@@ -1,4 +1,5 @@
 import pytest
+from pytest_mock import MockFixture
 from yaml.error import YAMLError
 
 from src.quantcerebro.utils import Singleton, load_class, load_yaml
@@ -11,7 +12,7 @@ class Object(metaclass=Singleton):
 
 
 @pytest.fixture
-def mocker_open_from_valid_path(mocker):
+def mocker_open_from_valid_path(mocker: MockFixture):
     mocked_result = mocker.mock_open(read_data="{}")
     mocker.patch("src.quantcerebro.utils.open", mocked_result)
 
@@ -48,7 +49,7 @@ def test_load_class_invalid_path():
         clazz = load_class(f"{invalid_module_path}.Singleton")
 
 
-def test_load_class(mocker):
+def test_load_class(mocker:MockFixture):
     import sys
     mocker.patch("src.quantcerebro.utils.import_module", return_value=sys.modules[__name__])
     out = load_class("lll.Object")
