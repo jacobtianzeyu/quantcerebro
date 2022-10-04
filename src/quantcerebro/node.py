@@ -5,7 +5,7 @@ from abc import ABC , abstractmethod
 from typing import Dict , Type , Any , Callable , Set , Mapping
 from dataclasses import dataclass
 
-from .event import GraphEventEmitter
+from .event import GraphEventEmitter , GraphEvent
 
 
 class PredecessorNode(ABC):
@@ -15,9 +15,10 @@ class PredecessorNode(ABC):
     def __init__(self):
         super(PredecessorNode,self).__init__()
         self.name = ""
-        self.implemented_interfaces: Dict[ str , SuccessorNode ] = dict()
         self.event_emitter = GraphEventEmitter()
-        self._consolidate_implemented_interfaces()
+        self.implemented_interfaces: Dict[ str , Any ] = self._consolidate_implemented_interfaces()
+        if not isinstance(self.implemented_interfaces,dict):
+            raise TypeError("implemented_interface should be a dictionary")
 
     @abstractmethod
     def init_model(self, config: NodeConfig):
@@ -27,22 +28,23 @@ class PredecessorNode(ABC):
         # self.events[event.name()] = event
         self.event_emitter.create_event(event_name)
 
+    def get_event(self,event_name:str)-> GraphEvent:
+        try:
+            event = self.event_emitter.events[ event_name ]
+        except KeyError:
+            raise KeyError("Event Not Found")
+        return event
+
     def register_handler_to_event(self, event_name:str, event_handler:Callable):
-        # self.events[event_name] += event_handler
         self.event_emitter.add_listener(event_name , event_handler)
 
-    def get_event(self,event_name:str):
-        return self.event_emitter.events[event_name]
-
     def notify_handlers(self, event_name:str, *msg):
-        # for k, v in self.event_emitter.events.items():
-        #     if msg.__class__ == v:
-        #         v.emit(msg)
+
         self.event_emitter.emit(event_name,*msg)
 
-    @abstractmethod
-    def _consolidate_implemented_interfaces(self) -> None:
-        raise NotImplementedError
+    def _consolidate_implemented_interfaces(self) -> Dict[str, Any]:
+        """return a dictionary of implemented of interface"""
+        return dict()
 
 
 class SuccessorNode(ABC):
