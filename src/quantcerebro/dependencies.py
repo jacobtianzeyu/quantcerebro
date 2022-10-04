@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Type, Any, TypeVar
 
 
-from node import Node , SuccessorNode , PredecessorNode
+from .node import Node , SuccessorNode , PredecessorNode
 
 
 @dataclass(frozen=True)

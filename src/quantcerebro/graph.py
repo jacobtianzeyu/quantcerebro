@@ -4,9 +4,10 @@ import logging
 from importlib import import_module
 from dataclasses import dataclass , field
 from typing import Set , List , Any , Dict , Optional
-from dependencies import Dependency , EventDependency , CallableDependency
-from node import Node, NodeConfig
-from utils import load_yaml , load_class
+
+from .dependencies import Dependency , EventDependency , CallableDependency
+from .node import Node, NodeConfig
+from .utils import load_yaml , load_class
 
 
 class GraphBuilder:

@@ -5,7 +5,7 @@ from abc import ABC , abstractmethod
 from typing import Dict , Type , Any , Callable , Set , Mapping
 from dataclasses import dataclass
 
-from event import EventEmitter
+from .event import GraphEventEmitter
 
 
 class PredecessorNode(ABC):
@@ -16,7 +16,7 @@ class PredecessorNode(ABC):
         super(PredecessorNode,self).__init__()
         self.name = ""
         self.implemented_interfaces: Dict[ str , SuccessorNode ] = dict()
-        self.event_emitter = EventEmitter()
+        self.event_emitter = GraphEventEmitter()
         self._consolidate_implemented_interfaces()
 
     @abstractmethod
@@ -34,11 +34,11 @@ class PredecessorNode(ABC):
     def get_event(self,event_name:str):
         return self.event_emitter.events[event_name]
 
-    def notify_handlers(self, event_name:str, msg: Any):
+    def notify_handlers(self, event_name:str, *msg):
         # for k, v in self.event_emitter.events.items():
         #     if msg.__class__ == v:
         #         v.emit(msg)
-        self.event_emitter.emit(event_name,msg)
+        self.event_emitter.emit(event_name,*msg)
 
     @abstractmethod
     def _consolidate_implemented_interfaces(self) -> None:

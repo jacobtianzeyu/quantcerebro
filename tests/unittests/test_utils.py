@@ -14,7 +14,7 @@ class Object(metaclass=Singleton):
 @pytest.fixture
 def mocker_open_from_valid_path(mocker: MockFixture):
     mocked_result = mocker.mock_open(read_data="{}")
-    mocker.patch("src.quantcerebro.utils.open", mocked_result)
+    mocker.patch("src.quantcerebro.utils.open", new=mocked_result)
 
 
 def test_singleton():

@@ -1,5 +1,5 @@
-from dependencies import Dependency
-from graph import GraphBuilder , GraphConfig , Node
+from .dependencies import Dependency
+from .graph import GraphBuilder , GraphConfig , Node
 
 
 class AppFacade:
