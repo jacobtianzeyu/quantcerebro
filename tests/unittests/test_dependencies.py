@@ -21,8 +21,6 @@ def predecessor_node(interface_class) -> PredecessorNode:
 @pytest.fixture
 def successor_node() -> SuccessorNode:
     class SNode(SuccessorNode):
-
-
         def _consolidate_implemented_handlers(self):
             pass
 
@@ -49,8 +47,7 @@ def interface_class():
     return InterfaceClass
 
 
-
-def test_register_dependency(predecessor_node,successor_node):
+def test_register_dependency(predecessor_node, successor_node):
     with pytest.raises(NotImplementedError):
         a = Dependency(predecessor_node,successor_node)
 
@@ -61,7 +58,7 @@ def test_event_register_dependency_missing_handler(predecessor_node,successor_no
 
 
 def test_event_register_dependency(mocker:MockFixture, predecessor_node,successor_node, event_data_class):
-    event_key =f"{predecessor_node.__class__.__name__}.{event_data_class.__name__}"
+    event_key = f"{predecessor_node.__class__.__name__}.{event_data_class.__name__}"
     event_handler = lambda x: x
     e = GraphEventEmitter()
 
