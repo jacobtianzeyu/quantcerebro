@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict , Callable , Any, Union
+from typing import Dict , Callable , Any , Union , Optional
 from eventkit import Event, Op
 
 from .utils import Singleton
@@ -27,8 +27,8 @@ class GraphEventEmitter(metaclass=Singleton):
     def create_event(self, name:str):
         self.events[name] = GraphEvent(name)
 
-    def add_listener(self, name:str, listener: Callable):
-        self.events[name].connect(listener)
+    def add_listener(self, name:str, listener: Callable, error_callback:Optional[Callable]=None, done_callback:Optional[Callable]=None):
+        self.events[name].connect(listener, error_callback,done_callback)
 
     def emit(self, name:str, *args):
         self.events[name].emit(*args)
