@@ -2,8 +2,12 @@ import pytest
 
 
 class TestPredecessorNode:
+
+
     def test_init(self):
         ...
+
+
 
 
 class TestSuccessorNode:

@@ -1,9 +1,10 @@
 import pytest
 from pytest_mock import MockFixture
 
-from event import EventEmitter
-from node import PredecessorNode , SuccessorNode
+from src.quantcerebro.event import GraphEventEmitter
+from src.quantcerebro.node import PredecessorNode , SuccessorNode
 from src.quantcerebro.dependencies import Dependency, CallableDependency, EventDependency
+
 
 @pytest.fixture
 def predecessor_node(interface_class) -> PredecessorNode:
@@ -15,6 +16,7 @@ def predecessor_node(interface_class) -> PredecessorNode:
             ...
 
     return PNode()
+
 
 @pytest.fixture
 def successor_node() -> SuccessorNode:
@@ -61,7 +63,7 @@ def test_event_register_dependency_missing_handler(predecessor_node,successor_no
 def test_event_register_dependency(mocker:MockFixture, predecessor_node,successor_node, event_data_class):
     event_key =f"{predecessor_node.__class__.__name__}.{event_data_class.__name__}"
     event_handler = lambda x: x
-    e = EventEmitter()
+    e = GraphEventEmitter()
 
     mocker.patch.object(successor_node,"implemented_event_handlers",new={event_key:event_handler})
     assert event_handler == successor_node.implemented_event_handlers[ event_key ] , "mocking done incorrectly"
