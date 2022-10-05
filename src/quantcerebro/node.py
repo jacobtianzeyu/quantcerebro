@@ -9,16 +9,22 @@ from .event import GraphEventEmitter , GraphEvent
 
 
 class PredecessorNode(ABC):
+    """
+    Predecessor Node is an abstract class. It should ONLY be inherited.
+    Predecessor Node house the logic for implemented interface and events, and handler registration functionalities
+    1) Predecessor Node implements a interface such that a registered successor node can use its functionality.
+    2) Predecessor Node defines a event, and successor node's handler is registered to it
+    """
     # __slots__ = ("registered_interfaces","event_emitter")
     logger = logging.getLogger(__name__)
 
     def __init__(self):
         super(PredecessorNode,self).__init__()
-        self.name = ""
         self.event_emitter = GraphEventEmitter()
         self.implemented_interfaces: Dict[ str , Any ] = self._consolidate_implemented_interfaces()
         if not isinstance(self.implemented_interfaces,dict):
             raise TypeError("implemented_interface should be a dictionary")
+
 
     @abstractmethod
     def init_model(self, config: NodeConfig):
@@ -48,12 +54,14 @@ class PredecessorNode(ABC):
 
 
 class SuccessorNode(ABC):
+    """
+    SuccessorNode Node is an abstract class. It should not be inherited
+    """
     # __slots__ = ("event_handlers","implemented_interfaces")
     logger = logging.getLogger(__name__)
 
     def __init__(self):
         super(SuccessorNode,self).__init__()
-        self.name = ""
         self.implemented_event_handlers: Dict[ str , Callable ] = dict()
         self.registered_interfaces: Dict[str, Any] = dict()
         self._consolidate_implemented_handlers()
@@ -70,7 +78,12 @@ class SuccessorNode(ABC):
         raise NotImplementedError
 
 
-class Node(SuccessorNode, PredecessorNode):
+class IConfigRetriever(ABC):
+    def request(self, name:str) -> NodeConfig:
+        raise NotImplementedError
+
+
+class Node(SuccessorNode, PredecessorNode, IConfigRetriever):
     """
     Node is the presenter for a model.
     Node can't be called on itself, it needs to be inherented.
@@ -79,16 +92,24 @@ class Node(SuccessorNode, PredecessorNode):
     def __init__(self, node_config: NodeConfig):
         super(Node,self).__init__()
         self.name = node_config.name
+        if not IConfigRetriever.__name__ in self.implemented_interfaces:
+            raise KeyError("_consolidate_implemented_interfaces inheritance issue, "
+                           "IConfigRetriever should be within, try super()._consolidate_implemented_interfaces()")
         # self.config = node_config
         # self.model = self.init_model(node_config)
 
     def init_model(self, config: NodeConfig):
         raise NotImplementedError
 
-    def _consolidate_implemented_interfaces(self) -> None:
+    def _consolidate_implemented_interfaces(self)-> Dict[str,Any]:
+        out = dict()
+        out[ IConfigRetriever.__name__ ] = self
+        return out
+
+    def _consolidate_implemented_handlers(self) -> Dict[str,Any]:
         raise NotImplementedError
 
-    def _consolidate_implemented_handlers(self) -> None:
+    def request(self, name:str) -> NodeConfig:
         raise NotImplementedError
 
 
@@ -103,9 +124,7 @@ class NodeConfig:
         return out
 
 
-class IConfigRetriever(ABC):
-    def request(self, name:str):
-        raise NotImplementedError
+
 
 
 class NodeConfigManager:

@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import Dict , Any
 
 import pytest
 from pytest_mock import MockFixture
@@ -28,6 +29,41 @@ def prednode():
     return PD()
 
 
+@pytest.fixture(scope="class")
+def succnode():
+
+    class SuccNode(SuccessorNode):
+        def _consolidate_implemented_handlers(self) -> Dict[ str , Any ]:
+            pass
+
+        def init_model(self , config: NodeConfig):
+            pass
+
+        def request(self , name: str):
+            return 1
+
+    return SuccNode()
+
+
+@pytest.fixture(scope="class")
+def fullnode():
+
+    class FullNode(Node):
+        def _consolidate_implemented_handlers(self) -> Dict[ str , Any ]:
+            pass
+
+        def _consolidate_implemented_interfaces(self) -> Dict[str,Any]:
+            return super()._consolidate_implemented_interfaces()
+
+        def init_model(self , config: NodeConfig):
+            pass
+
+        def request(self,name:str):
+            return 1
+    nd = NodeConfig("")
+    return FullNode(nd)
+
+
 class TestPredecessorNode:
 
     @pytest.fixture(autouse=True)
@@ -39,9 +75,8 @@ class TestPredecessorNode:
             PredecessorNode()
 
     def test_init(self):
-        assert self.prednode.name == ""
         assert self.prednode.event_emitter == GraphEventEmitter() #EventEmitter is a SingletonClass
-        assert "ITesting" in self.prednode.implemented_interfaces.keys()
+        assert "ITesting" in self.prednode.implemented_interfaces
 
     def test_init_model(self):
         ...
@@ -82,12 +117,17 @@ class TestPredecessorNode:
     def test_consolidate_implemented_interfaces(self):
         assert self.prednode.test() == 1
 
+
 class TestSuccessorNode:
-    ...
+    @pytest.fixture(autouse=True)
+    def setup(self, succnode):
+        self.succnode = succnode
 
 
 class TestNode:
-    ...
+    @pytest.fixture(autouse=True)
+    def setup(self, fullnode):
+        self.fullnode = fullnode
 
 
 class TestNodeConfig:
