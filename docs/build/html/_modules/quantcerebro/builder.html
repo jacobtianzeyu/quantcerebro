@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quantcerebro.builder &mdash; quantcerebro 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="abc.com_modules/quantcerebro/builder.html"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> quantcerebro
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">quantcerebro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>quantcerebro.builder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for quantcerebro.builder</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Builder for Scenario: :class:`.NodeSet`, :class:`.Node` and Scenario Config: :class:`.NodeSetConfig`, :class:`.NodeConfig`.</span>
+
+<span class="sd">There are two classes implemented: :class:`.ConfigBuilder` and :class:`.ScenarioBuilder`</span>
+
+
+<span class="sd">Scenario Configuration:</span>
+<span class="sd">-------------------------------</span>
+
+<span class="sd">Scenario Configuration is specified in yaml format, and takes the below construct.</span>
+
+<span class="sd">    .. code-block:: yaml</span>
+
+<span class="sd">        ---</span>
+<span class="sd">        name: ...</span>
+<span class="sd">        nodesetClass: ...</span>
+<span class="sd">        nodesetConfigClass: ...</span>
+<span class="sd">        components:</span>
+<span class="sd">            - name: ...</span>
+<span class="sd">              nodeClass: ...</span>
+<span class="sd">            - name: ...</span>
+<span class="sd">              nodesetClass: ...</span>
+<span class="sd">        edges:</span>
+<span class="sd">            - pred: ...</span>
+<span class="sd">              succ: ...</span>
+<span class="sd">              edgeType: ...</span>
+<span class="sd">              edgeClass: ...</span>
+<span class="sd">        componentConfigs:</span>
+<span class="sd">            - name: ...</span>
+<span class="sd">              configClass: ...</span>
+<span class="sd">              ...</span>
+<span class="sd">            - name: ...</span>
+<span class="sd">              nodesetPath: ...</span>
+
+
+<span class="sd">Configuration File keywords:</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">* ``name``: scenario name,</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        when a nodeset is a sub-scenario, the ``component.name`` defined in parent scenario will overwrite this name.</span>
+
+<span class="sd">* ``nodesetClass``: scenario class path, by default, you may specify as :class:`quantcerebro.nodeset.NodeSet`</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        when a nodeset is a sub-scenario, the ``component.nodesetClass`` defined in parent scenario will overwrite this field.</span>
+
+<span class="sd">* ``nodesetConfigClass``: scenario config class path, by default, you may specify as :class:`quantcerebro.nodeset.NodeSetConfig`</span>
+
+<span class="sd">* ``components``: component section, component can be a type :class:`.Node`, or type :class:`.NodeSet`</span>
+
+<span class="sd">    * ``components.name``: component name</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            * this field is required to be unique in a scenario configuration setup.</span>
+<span class="sd">            * this field will overwrite ``name`` of a sub-scenario, as subscenario is identified by ``componentConfigs.nodesetpath``</span>
+
+<span class="sd">    * ``components.nodeClass``: node as a component, and this field specifies the class of the node</span>
+
+<span class="sd">    * ``components.nodesetClass``: nodeset as a component, and this field specifies the class of the nodeset</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            this field will overwrite ``nodesetClass`` of a sub-scenario, where sub-scenario is identified by ``componentConfigs.nodesetpath``</span>
+
+<span class="sd">* ``edges``: dependency section, which specifies dependencies among components</span>
+
+<span class="sd">    * ``edges.pred``: predecessor component name</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            * when component is a node, this is the node name</span>
+<span class="sd">            * when component is a nodeset, this is [nodeset name].[node name], though only the last [node name] matters.</span>
+
+<span class="sd">    * ``edges.succ``: successor component name, same as edges.succ</span>
+
+<span class="sd">    * ``edges.edgeType``: dependency type: `callable` or `event`</span>
+
+<span class="sd">    * ``edges.edgeClass``: data class that handles the dependency data from pred to succ.</span>
+
+<span class="sd">* ``componentConfigs``:     config section for component configs that used to initialise component a component</span>
+
+<span class="sd">    * ``componentConfigs.name``:    component name as reference, there must be a one-to-one mapping with component section.</span>
+
+<span class="sd">    * ``componentConfigs.[...]``:   other user defined attributes when component is a node</span>
+
+<span class="sd">    * ``componentConfigs.nodesetPath``:    nodeset&#39;s path when component is a pre-defined nodeset</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># standard lib imports</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span> <span class="p">,</span> <span class="n">List</span> <span class="p">,</span> <span class="n">Tuple</span> <span class="p">,</span> <span class="n">Dict</span> <span class="p">,</span> <span class="n">Any</span>
+
+<span class="c1"># Local application/library specific imports.</span>
+<span class="kn">from</span> <span class="nn">src.quantcerebro.node</span> <span class="kn">import</span> <span class="n">NodeConfig</span> <span class="p">,</span> <span class="n">Config</span> <span class="p">,</span> <span class="n">ScenarioComponent</span>
+<span class="kn">from</span> <span class="nn">src.quantcerebro.utils</span> <span class="kn">import</span> <span class="n">load_class</span> <span class="p">,</span>  <span class="n">load_yaml</span>
+<span class="kn">from</span> <span class="nn">src.quantcerebro.dependencies</span> <span class="kn">import</span> <span class="n">Dependency</span> <span class="p">,</span> <span class="n">EdgeConfig</span> <span class="p">,</span> <span class="n">EventDependency</span> <span class="p">,</span> <span class="n">CallableDependency</span>
+<span class="kn">from</span> <span class="nn">src.quantcerebro.nodeset</span> <span class="kn">import</span> <span class="n">NodeSetConfig</span> <span class="p">,</span> <span class="n">NodeSet</span>
+
+<span class="c1"># 3rd-party imports</span>
+<span class="o">...</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;reStructuredText&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">build_scenario</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeSet</span><span class="p">:</span>
+    <span class="n">config_builder</span> <span class="o">=</span> <span class="n">ConfigBuilder</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">scenario_config</span> <span class="o">=</span> <span class="n">config_builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+    <span class="n">scenario_builder</span> <span class="o">=</span> <span class="n">ScenarioBuilder</span><span class="p">(</span><span class="n">scenario_config</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">scenario_builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ScenarioBuilder"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder">[docs]</a><span class="k">class</span> <span class="nc">ScenarioBuilder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Builds a composite scenario from composite config.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ScenarioBuilder.__init__"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">nodeset_config</span><span class="p">:</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param nodeset_config: composite scenario config</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span> <span class="o">=</span> <span class="n">nodeset_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="p">:</span> <span class="n">NodeSet</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">NodeSet</span> <span class="p">,</span> <span class="n">ScenarioBuilder</span><span class="o">.</span><span class="n">init_component_with_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span><span class="p">))</span>  <span class="c1"># root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="p">:</span> <span class="n">NodeSet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="nb">str</span> <span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeSet</span><span class="p">:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_components</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_edges</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span>
+
+    <span class="c1"># component</span>
+<div class="viewcode-block" id="ScenarioBuilder.build_components"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.build_components">[docs]</a>    <span class="k">def</span> <span class="nf">build_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        instantiate child component level by level from the top. Stack keeps track of a nodeset by name and it&#39;s child</span>
+<span class="sd">        configs, while stack is not empty, add each element from stack to it&#39;s parent nodeset. After components are</span>
+<span class="sd">        instantiated, consolidate all implemented interfaces and implemented handlers. These two functions puts</span>
+<span class="sd">        implemented interface (event handlers) into a dictionary, so it can be referenced.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            component name should be unique in a scenario</span>
+
+
+
+<span class="sd">        :return: the scenario with all child component instantiated, but no dependencies are registered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># stack to keep track of the leaf to construct - (name, config), it keeps track of the parent the leaf has</span>
+        <span class="n">stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Config</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span><span class="o">.</span><span class="n">name</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="c1"># while stack is not empty</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">component</span> <span class="o">=</span> <span class="n">ScenarioBuilder</span><span class="o">.</span><span class="n">init_component_with_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_check</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+            <span class="c1"># get current nodeset</span>
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_nodeset</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">)</span>
+
+            <span class="c1"># add component to current_nodeset</span>
+
+            <span class="c1"># when component is a nodeset</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span> <span class="p">,</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+                <span class="c1"># if component is not &quot;scenario&quot; itself, add component to current_nodeset, else do nothing</span>
+                <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+                    <span class="n">parent_nodeset_name</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span>
+
+                <span class="c1"># push (parent_nodeset_name, config) to stack</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+            <span class="c1"># when component is a node</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">consolidate_implemented_interfaces</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">consolidate_implemented_handlers</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span></div>
+
+<div class="viewcode-block" id="ScenarioBuilder.add_component"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.add_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_component</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">ScenarioComponent</span> <span class="p">,</span> <span class="n">switch_to</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add a scenario component to current nodeset level, when switch_to is true and current component is a nodeset, switch to this nodeset branch</span>
+<span class="sd">        :param component: scenario component</span>
+<span class="sd">        :param switch_to: whether to switch to the added nodeset or not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">switch_to</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span> <span class="p">,</span> <span class="n">NodeSet</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">NodeSet</span> <span class="p">,</span> <span class="n">component</span><span class="p">)</span></div>
+
+    <span class="c1"># edge</span>
+<div class="viewcode-block" id="ScenarioBuilder.build_edges"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.build_edges">[docs]</a>    <span class="k">def</span> <span class="nf">build_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeSet</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        register configured dependnecies level by level. Stack keeps track of a nodeset by name and it&#39;s child  configs,</span>
+<span class="sd">        edge_stack keep tracks a nodeset, and it&#39;s child config dependencies. After edge_stack is fully populated,</span>
+<span class="sd">        iterate through and register dependencies one by one</span>
+<span class="sd">        :return: the scenario with all dependencies built</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Config</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span><span class="o">.</span><span class="n">name</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodeset_config</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">edge_stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">EdgeConfig</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_nodeset</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span> <span class="p">,</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">parent_nodeset_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">name</span>
+
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+                    <span class="n">edge_stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="n">edge_stack</span><span class="p">:</span>
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edge_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_current_nodeset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_nodeset</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">))</span>
+
+            <span class="n">pred_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_child_node_by_tag</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">pred</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span> <span class="o">-</span><span class="mi">1</span> <span class="p">])</span>
+            <span class="n">succ_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_child_node_by_tag</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">succ</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span> <span class="o">-</span><span class="mi">1</span> <span class="p">])</span>
+            <span class="n">edge_dataclass</span> <span class="o">=</span> <span class="n">load_class</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">edge_dataclass</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">edge_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;event&quot;</span><span class="p">:</span>
+                <span class="n">event_dependency</span> <span class="o">=</span> <span class="n">EventDependency</span><span class="p">(</span><span class="n">pred_node</span> <span class="p">,</span> <span class="n">succ_node</span> <span class="p">,</span> <span class="n">edge_dataclass</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">event_dependency</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">edge_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;callable&quot;</span><span class="p">:</span>
+                <span class="n">callable_dependency</span> <span class="o">=</span> <span class="n">CallableDependency</span><span class="p">(</span><span class="n">pred_node</span> <span class="p">,</span> <span class="n">succ_node</span> <span class="p">,</span> <span class="n">edge_dataclass</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">callable_dependency</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span></div>
+
+<div class="viewcode-block" id="ScenarioBuilder.add_edge"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.add_edge">[docs]</a>    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">edge</span><span class="p">:</span> <span class="n">Dependency</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add a dependency to a nodeset&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">consolidate_implemented_interfaces</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">consolidate_implemented_handlers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span></div>
+
+    <span class="c1"># auxiliaries</span>
+<div class="viewcode-block" id="ScenarioBuilder.set_current_nodeset"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.set_current_nodeset">[docs]</a>    <span class="k">def</span> <span class="nf">set_current_nodeset</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">nodeset</span><span class="p">:</span> <span class="n">NodeSet</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set current nodeset pointer to the input&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset</span> <span class="o">=</span> <span class="n">nodeset</span></div>
+
+<div class="viewcode-block" id="ScenarioBuilder.init_component_with_config"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.init_component_with_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">init_component_with_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ScenarioComponent</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        takes in a config of scenario component, and build it</span>
+<span class="sd">        :param config: either type :class:`.NodeConfig` or type :class:`.NodeSetConfig`</span>
+<span class="sd">        :return: child component of scenario</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># load configclass</span>
+        <span class="c1"># init class with config</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span> <span class="p">,</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">NodeSetConfig</span> <span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+            <span class="n">klazz</span> <span class="o">=</span> <span class="n">load_class</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">nodeset_class</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">NodeConfig</span> <span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+            <span class="n">klazz</span> <span class="o">=</span> <span class="n">load_class</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">node_class</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">klazz</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ScenarioBuilder.name_check"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ScenarioBuilder.name_check">[docs]</a>    <span class="k">def</span> <span class="nf">name_check</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;check if name is already used&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;name &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is already used in </span><span class="si">{</span><span class="n">cast</span><span class="p">(</span><span class="n">NodeSet</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_child_component</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div></div>
+
+    <span class="c1"># def build2(self) -&gt; NodeSet:</span>
+    <span class="c1">#     # not used</span>
+    <span class="c1">#     nodeset_klazz = load_class(self.nodeset_config.nodeset_class)</span>
+    <span class="c1">#     scenario = cast(NodeSet, nodeset_klazz(self.nodeset_config))</span>
+    <span class="c1">#</span>
+    <span class="c1">#     stack:List[Config] = list()</span>
+    <span class="c1">#     stack.append(self.nodeset_config)</span>
+    <span class="c1">#     while stack:</span>
+    <span class="c1">#         current_config = stack.pop()</span>
+    <span class="c1">#         if isinstance(current_config, NodeSetConfig):</span>
+    <span class="c1">#             for n in current_config.components:</span>
+    <span class="c1">#                 stack.append(n)</span>
+    <span class="c1">#         else:</span>
+    <span class="c1">#             current_config = cast(NodeConfig, current_config)</span>
+    <span class="c1">#             node_klazz = load_class(current_config.node_class)</span>
+    <span class="c1">#             node = node_klazz(current_config)</span>
+    <span class="c1">#             scenario.add_child(node)</span>
+    <span class="c1">#             print(node.name)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     return scenario</span>
+
+
+<div class="viewcode-block" id="ConfigBuilder"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ConfigBuilder">[docs]</a><span class="k">class</span> <span class="nc">ConfigBuilder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ConfigBuilder takes in a yaml file, and returns a composite configuration :class:`.NodeSetConfig`</span>
+
+<span class="sd">    :param file_path: configuration file location</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NODESET_NAME</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">NODESET_CONFIG_CLASS</span> <span class="o">=</span> <span class="s2">&quot;nodesetConfigClass&quot;</span>
+    <span class="n">NODESET_CLASS</span> <span class="o">=</span> <span class="s2">&quot;nodesetClass&quot;</span>
+
+    <span class="n">COMPONENTS</span> <span class="o">=</span> <span class="s2">&quot;components&quot;</span>
+    <span class="n">COMPONENT_NAME</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">NODE_CLASS</span> <span class="o">=</span> <span class="s2">&quot;nodeClass&quot;</span>
+
+
+    <span class="n">EDGES</span> <span class="o">=</span> <span class="s2">&quot;edges&quot;</span>
+    <span class="n">EDGE_PRED</span> <span class="o">=</span> <span class="s2">&quot;pred&quot;</span>
+    <span class="n">EDGE_SUCC</span> <span class="o">=</span> <span class="s2">&quot;succ&quot;</span>
+    <span class="n">EDGE_TYPE</span> <span class="o">=</span> <span class="s2">&quot;edgeType&quot;</span>
+    <span class="n">EDGE_CLASS</span> <span class="o">=</span> <span class="s2">&quot;edgeClass&quot;</span>
+
+    <span class="n">COMPONENT_CONFIGS</span> <span class="o">=</span> <span class="s2">&quot;componentConfigs&quot;</span>
+    <span class="n">COMPONENT_CONFIG_NAME</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">NODE_CONFIG_CLASS</span> <span class="o">=</span> <span class="s2">&quot;configClass&quot;</span>
+    <span class="n">NODESET_PATH</span> <span class="o">=</span> <span class="s2">&quot;nodesetPath&quot;</span>
+
+
+<div class="viewcode-block" id="ConfigBuilder.__init__"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ConfigBuilder.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_dict</span><span class="p">(</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="p">:</span> <span class="n">NodeSetConfig</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">NodeSetConfig</span> <span class="p">,</span>
+                                                   <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">init_component_config_with_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="p">:</span> <span class="n">NodeSetConfig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="nb">str</span> <span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConfigBuilder.build"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ConfigBuilder.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeSetConfig</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: NodeSetConfig</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_components</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_edges</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span></div>
+
+    <span class="k">def</span> <span class="nf">build_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Dict</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span> <span class="s2">&quot;name&quot;</span> <span class="p">]</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">)</span> <span class="p">]</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">config_dict</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">component_config</span> <span class="o">=</span> <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">init_component_config_with_dict</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_check</span><span class="p">(</span><span class="n">component_config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">get_nodeset_config</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_CONFIG_CLASS</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">component_config</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_component_config</span><span class="p">(</span><span class="n">component_config</span><span class="p">)</span>
+                    <span class="n">parent_nodeset_name</span> <span class="o">=</span> <span class="n">component_config</span><span class="o">.</span><span class="n">name</span>
+
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span> <span class="p">]:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_component_config</span><span class="p">(</span><span class="n">component_config</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">build_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Dict</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_NAME</span> <span class="p">]</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">edge_stack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Tuple</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Dict</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">config_dict</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">get_nodeset_config</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_CONFIG_CLASS</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_NAME</span> <span class="p">]:</span>
+                    <span class="n">parent_nodeset_name</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NODESET_NAME</span> <span class="p">]</span>
+
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span> <span class="p">]:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDGES</span> <span class="p">]:</span>
+                    <span class="n">edge_stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="n">edge_stack</span><span class="p">:</span>
+            <span class="n">parent_nodeset_name</span> <span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edge_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">parent_nodeset_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_current_nodeset_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">get_nodeset_config</span><span class="p">(</span><span class="n">parent_nodeset_name</span><span class="p">))</span>
+
+            <span class="n">ec</span> <span class="o">=</span> <span class="n">EdgeConfig</span><span class="p">(</span><span class="n">e</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDGE_PRED</span> <span class="p">]</span> <span class="p">,</span> <span class="n">e</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDGE_SUCC</span> <span class="p">]</span> <span class="p">,</span> <span class="n">e</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDGE_CLASS</span> <span class="p">]</span> <span class="p">,</span> <span class="n">e</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDGE_TYPE</span> <span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span>
+
+    <span class="k">def</span> <span class="nf">set_current_nodeset_config</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">nodeset_config</span><span class="p">:</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span> <span class="o">=</span> <span class="n">nodeset_config</span>
+
+    <span class="k">def</span> <span class="nf">add_component_config</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">component_config</span><span class="p">:</span> <span class="n">Config</span> <span class="p">,</span> <span class="n">switch_to</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="o">.</span><span class="n">add_child_config</span><span class="p">(</span><span class="n">component_config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">switch_to</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component_config</span> <span class="p">,</span> <span class="n">NodeSetConfig</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span> <span class="o">=</span> <span class="n">component_config</span>
+
+    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">edge</span><span class="p">:</span> <span class="n">EdgeConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_nodeset_config</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">init_component_config_with_dict</span><span class="p">(</span><span class="n">config_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">NODESET_CONFIG_CLASS</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
+            <span class="n">klazz</span><span class="p">:</span> <span class="n">NodeSetConfig</span> <span class="o">=</span> <span class="n">load_class</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span> <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">NODESET_CONFIG_CLASS</span> <span class="p">])</span>
+            <span class="k">return</span> <span class="n">klazz</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">NODE_CONFIG_CLASS</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
+            <span class="n">klazz</span><span class="p">:</span> <span class="n">NodeConfig</span> <span class="o">=</span> <span class="n">load_class</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span> <span class="n">ConfigBuilder</span><span class="o">.</span><span class="n">NODE_CONFIG_CLASS</span>  <span class="p">])</span>
+            <span class="k">return</span> <span class="n">klazz</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input key does not have nodesetConfig or nodeConfig...</span><span class="si">{</span><span class="n">config_dict</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">name_check</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;name &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is already used in </span><span class="si">{</span><span class="n">cast</span><span class="p">(</span><span class="n">NodeSet</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_config</span><span class="o">.</span><span class="n">get_child_component_config</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConfigBuilder.process_dict"><a class="viewcode-back" href="../../api.html#quantcerebro.builder.ConfigBuilder.process_dict">[docs]</a>    <span class="k">def</span> <span class="nf">process_dict</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">config_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Any</span> <span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        the instantiated dictionary from yaml file is not in composite format, so this preprocessing step assembles it</span>
+<span class="sd">        into a correct format</span>
+<span class="sd">        :param config_dict: the raw format of yaml dictionary</span>
+<span class="sd">        :return: returns a composite patterned dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">component_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Dict</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Any</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COMPONENT_CONFIGS</span><span class="p">)</span> <span class="c1">#component config section</span>
+        <span class="n">components</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span> <span class="n">Dict</span><span class="p">[</span> <span class="nb">str</span> <span class="p">,</span> <span class="n">Any</span> <span class="p">]</span> <span class="p">]</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span><span class="p">)</span> <span class="c1"># component section</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">component_configs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">n</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENT_NAME</span><span class="p">]</span> <span class="o">==</span> <span class="n">nc</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENT_CONFIG_NAME</span> <span class="p">]:</span>
+                    <span class="c1"># when component is a node</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODE_CLASS</span> <span class="ow">in</span> <span class="n">n</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">nc</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODE_CLASS</span> <span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODE_CLASS</span> <span class="p">]</span>
+
+                    <span class="c1"># when component is a nodeset</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_CLASS</span> <span class="ow">in</span> <span class="n">n</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="c1"># load nodeset details</span>
+                        <span class="n">new_nc</span> <span class="o">=</span> <span class="n">load_yaml</span><span class="p">(</span><span class="n">nc</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_PATH</span> <span class="p">])</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">new_nc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_dict</span><span class="p">(</span><span class="n">new_nc</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nodeset </span><span class="si">{</span><span class="n">new_nc</span><span class="p">[</span> <span class="s1">&#39;name&#39;</span> <span class="p">]</span><span class="si">}</span><span class="s2"> has format issue&quot;</span><span class="p">)</span>
+                        <span class="n">nc</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+                        <span class="c1"># update nc from new_nc</span>
+                        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">new_nc</span><span class="p">:</span>
+                            <span class="n">nc</span><span class="p">[</span> <span class="n">key</span> <span class="p">]</span> <span class="o">=</span> <span class="n">new_nc</span><span class="p">[</span> <span class="n">key</span> <span class="p">]</span>
+                        <span class="c1"># align name -&gt; makesure the user defined name is used in the scenario</span>
+                        <span class="n">nc</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENT_NAME</span> <span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENT_NAME</span> <span class="p">]</span>
+                        <span class="n">nc</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_CLASS</span> <span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODESET_CLASS</span> <span class="p">]</span>
+
+        <span class="c1"># assign updated component_config to config_dict</span>
+        <span class="n">config_dict</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span> <span class="p">]</span> <span class="o">=</span> <span class="n">component_configs</span>
+        <span class="k">return</span> <span class="n">config_dict</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2022, The QuantCerebro Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

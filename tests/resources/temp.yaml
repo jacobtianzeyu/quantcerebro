@@ -1,0 +1,36 @@
+---
+name: base_node
+nodesetClass: src.quantcerebro.nodeset.NodeSet
+nodesetConfigClass: src.quantcerebro.nodeset.NodeSetConfig
+components:
+  - name: SetOne
+    nodesetClass: tests.resources.nodeset_ab.SetOne
+    nodesetConfigClass: src.quantcerebro.nodeset.NodeSetConfig
+    components:
+      - name: A
+        nodeClass: tests.resources.node_a.A
+        configClass: tests.resources.node_a.AConfig
+        model:
+          attr: attrA
+      - name: B
+        nodeClass: tests.resources.node_b.B
+        configClass: tests.resources.node_b.BConfig
+        model:
+          attr: attrA
+    edges:
+      - pred: A
+        succ: B
+        edgeType: callable
+        edgeClass: tests.resources.node_a.InterfaceA
+  - name: D
+    nodeClass: tests.resources.node_d.D
+    configClass: tests.resources.node_d.DConfig
+    model:
+      attr: attrA
+edges:
+  - pred: SetOne.A
+    succ: D
+    edgeType: event
+    edgeClass: tests.resources.node_b.BEvent
+
+

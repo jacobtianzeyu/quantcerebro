@@ -4,11 +4,16 @@
    contain the root `toctree` directive.
 
 Welcome to quantcerebro's documentation!
-========================================
+=========================================
+
+release |release|
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   api.rst
 
 
 

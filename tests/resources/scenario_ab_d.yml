@@ -1,0 +1,21 @@
+---
+name: base_node
+nodesetClass: src.quantcerebro.nodeset.NodeSet
+nodesetConfigClass: src.quantcerebro.nodeset.NodeSetConfig
+components:
+  - name: SetOne
+    nodesetClass: tests.resources.nodeset_ab.NodeSet
+  - name: D
+    nodeClass: tests.resources.node_d.D
+edges:
+  - pred: SetOne.B
+    succ: D
+    edgeType: event
+    edgeClass: tests.resources.node_b.BEvent
+componentConfigs:
+  - name: SetOne
+    nodesetPath: /Users/zeyutian/Documents/GitHub/quantcerebro/tests/resources/scenario_a_b.yml
+  - name: D
+    configClass: tests.resources.node_d.DConfig
+    attr: attrA
+

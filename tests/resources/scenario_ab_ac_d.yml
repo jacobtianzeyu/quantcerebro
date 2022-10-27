@@ -1,0 +1,27 @@
+---
+name: scenario_ab_ac_d
+nodesetClass: src.quantcerebro.nodeset.NodeSet
+nodesetConfigClass: src.quantcerebro.nodeset.NodeSetConfig
+components:
+  - name: SetOne
+    nodesetClass: tests.resources.nodeset_ab.SetOne
+  - name: SetTwo
+    nodesetClass: src.quantcerebro.nodeset.NodeSet
+  - name: D
+    nodeClass: tests.resources.node_d.D
+edges:
+  - pred: SetOne.A
+    succ: D
+    edgeType: callable
+    edgeClass: tests.resources.node_a.InterfaceA
+  - pred: SetOne.B
+    succ: SetTwo.C
+    edgeType: event
+    edgeClass: nothing
+componentConfigs:
+  - name: SetOne
+    nodesetPath: /Users/zeyutian/Documents/GitHub/quantcerebro/tests/resources/scenario_a_b.yml
+  - name: SetTwo
+    nodesetPath: /Users/zeyutian/Documents/GitHub/quantcerebro/tests/resources/scenario_a_c.yml
+  - name: D
+    configClass: tests.resources.node_d.DConfig

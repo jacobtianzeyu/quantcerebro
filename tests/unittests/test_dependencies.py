@@ -1,15 +1,43 @@
+from typing import Dict , Any , Callable , Optional
+
 import pytest
 from pytest_mock import MockFixture
 
+from src.quantcerebro import GraphEvent
 from src.quantcerebro.event import GraphEventEmitter
-from src.quantcerebro.node import PredecessorNode , SuccessorNode
+from src.quantcerebro.meta import PredecessorTemplate , SuccessorTemplate
 from src.quantcerebro.dependencies import Dependency, CallableDependency, EventDependency
 
 
 @pytest.fixture
-def predecessor_node(interface_class) -> PredecessorNode:
-    class PNode(PredecessorNode, interface_class):
-        def _consolidate_implemented_interfaces(self) -> None:
+def predecessor_node(interface_class) -> PredecessorTemplate:
+    class PNode(PredecessorTemplate, interface_class):
+
+        @property
+        def name(self) -> str:
+            pass
+
+        @property
+        def implemented_interfaces(self) -> Optional[ Dict[ str , Any ] ]:
+            pass
+
+        @property
+        def event_emitter(self) -> Optional[ Dict[ str , Any ] ]:
+            pass
+
+        def add_event(self , node_name: str , event_name: str):
+            pass
+
+        def get_event(self , node_name: str , event_name: str) -> GraphEvent:
+            pass
+
+        def register_handler_to_event(self , node_name: str , event_name: str , event_handler: Callable):
+            pass
+
+        def notify_handlers(self , node_name: str , event_name: str , *msg):
+            pass
+
+        def consolidate_implemented_interfaces(self) -> Dict[ str , Any ]:
             pass
 
         def init_model(self,config):
@@ -19,8 +47,8 @@ def predecessor_node(interface_class) -> PredecessorNode:
 
 
 @pytest.fixture
-def successor_node() -> SuccessorNode:
-    class SNode(SuccessorNode):
+def successor_node() -> SuccessorTemplate:
+    class SNode(SuccessorTemplate):
         def _consolidate_implemented_handlers(self):
             pass
 

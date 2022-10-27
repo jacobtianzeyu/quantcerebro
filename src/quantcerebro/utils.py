@@ -1,6 +1,7 @@
 from importlib import import_module
+from typing import Dict , Any
+
 from yaml import safe_load
-from typing import Dict , Any , Awaitable
 
 
 class Singleton(type):
@@ -11,11 +12,10 @@ class Singleton(type):
     """
     _instances = {}
 
-    def __call__(cls, *args, **kwargs):
-
+    def __call__(cls , *args , **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+            cls._instances[ cls ] = super(Singleton , cls).__call__(*args , **kwargs)
+        return cls._instances[ cls ]
 
 
 def load_yaml(file: str) -> Dict[ str , Any ]:

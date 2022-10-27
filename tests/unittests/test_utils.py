@@ -37,20 +37,22 @@ def test_load_yaml(mocker_open_from_valid_path):
     assert out == dict() , "Value should be mocked"
 
 
-def test_load_class_invalid_attribute():
-    invalid_attibute_name = "Singleton1"
-    with pytest.raises(AttributeError, match=f"'*{invalid_attibute_name}*'"):
-        clazz = load_class(f"utils.{invalid_attibute_name}")
-
-
-def test_load_class_invalid_path():
-    invalid_module_path = "utils.uti"
-    with pytest.raises(ModuleNotFoundError, match=f"'*{invalid_module_path}*'"):
-        clazz = load_class(f"{invalid_module_path}.Singleton")
-
-
 def test_load_class(mocker:MockFixture):
     import sys
     mocker.patch("src.quantcerebro.utils.import_module", return_value=sys.modules[__name__])
     out = load_class("lll.Object")
     assert out == Object
+
+
+def test_load_class_invalid_attribute():
+    invalid_attibute_name = "Singleton1"
+    with pytest.raises(AttributeError, match=f"{invalid_attibute_name}"):
+        clazz = load_class(f"src.quantcerebro.utils.{invalid_attibute_name}")
+
+
+def test_load_class_invalid_path():
+    invalid_module_path = "utils"
+    with pytest.raises(ModuleNotFoundError,match=f"{invalid_module_path}"):
+        clazz = load_class(f"{invalid_module_path}.Singleton")
+
+

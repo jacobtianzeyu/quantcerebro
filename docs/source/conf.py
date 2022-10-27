@@ -40,7 +40,8 @@ todo_include_todos = False
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    # 'sphinx.ext.autosummary',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.intersphinx',
     # formats
     'sphinx_autodoc_typehints',
     'sphinx.ext.viewcode',

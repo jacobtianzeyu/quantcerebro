@@ -1,0 +1,19 @@
+---
+name: scenario_a_c
+nodesetClass: src.quantcerebro.nodeset.NodeSetConfig
+nodesetConfigClass: src.quantcerebro.nodeset.NodeSetConfig
+components:
+  - name: A
+    nodeClass: tests.resources.node_a.A
+  - name: C
+    nodeClass: tests.resources.node_c.C
+edges:
+  - pred: A
+    succ: C
+    edgeType: event
+    edgeClass: nothing
+componentConfigs:
+  - name: A
+    configClass: tests.resources.node_a.AConfig
+  - name: C
+    configClass: tests.resources.node_c.CConfig

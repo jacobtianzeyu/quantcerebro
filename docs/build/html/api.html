@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Docs &mdash; quantcerebro 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="abc.comapi.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to quantcerebro’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> quantcerebro
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quantcerebro">quantcerebro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#builder">builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scenario-configuration">Scenario Configuration:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-file-keywords">Configuration File keywords:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.__init__"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.build_components"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.build_components()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.add_component"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.add_component()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.build_edges"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.build_edges()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.add_edge"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.add_edge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.set_current_nodeset"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.set_current_nodeset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.init_component_with_config"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.init_component_with_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder.name_check"><code class="docutils literal notranslate"><span class="pre">ScenarioBuilder.name_check()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.builder.ConfigBuilder"><code class="docutils literal notranslate"><span class="pre">ConfigBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ConfigBuilder.__init__"><code class="docutils literal notranslate"><span class="pre">ConfigBuilder.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ConfigBuilder.build"><code class="docutils literal notranslate"><span class="pre">ConfigBuilder.build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.builder.ConfigBuilder.process_dict"><code class="docutils literal notranslate"><span class="pre">ConfigBuilder.process_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#meta">meta</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.name"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.implemented_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.event_emitter"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.event_emitter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.registered_events"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.registered_events</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.add_event"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.add_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.get_event"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.get_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.register_handler_to_event"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.register_handler_to_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.notify_handlers"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.notify_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate.consolidate_implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">PredecessorTemplate.consolidate_implemented_interfaces()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate.name"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate.registered_interfaces"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate.registered_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate.implemented_event_handlers"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate.implemented_event_handlers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate.register_interface_to_node"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate.register_interface_to_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate.consolidate_implemented_handlers"><code class="docutils literal notranslate"><span class="pre">SuccessorTemplate.consolidate_implemented_handlers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.meta.ScenarioComponent"><code class="docutils literal notranslate"><span class="pre">ScenarioComponent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.ScenarioComponent.__init__"><code class="docutils literal notranslate"><span class="pre">ScenarioComponent.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.ScenarioComponent.name"><code class="docutils literal notranslate"><span class="pre">ScenarioComponent.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.ScenarioComponent.is_nodeset"><code class="docutils literal notranslate"><span class="pre">ScenarioComponent.is_nodeset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.ScenarioComponent.get_nodeset"><code class="docutils literal notranslate"><span class="pre">ScenarioComponent.get_nodeset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.meta.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.Config.is_nodeset_config"><code class="docutils literal notranslate"><span class="pre">Config.is_nodeset_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.Config.get_nodeset_config"><code class="docutils literal notranslate"><span class="pre">Config.get_nodeset_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.meta.Config.__init__"><code class="docutils literal notranslate"><span class="pre">Config.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-quantcerebro.nodeset">nodeset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet"><code class="docutils literal notranslate"><span class="pre">NodeSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.__init__"><code class="docutils literal notranslate"><span class="pre">NodeSet.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.name"><code class="docutils literal notranslate"><span class="pre">NodeSet.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">NodeSet.implemented_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.event_emitter"><code class="docutils literal notranslate"><span class="pre">NodeSet.event_emitter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.registered_interfaces"><code class="docutils literal notranslate"><span class="pre">NodeSet.registered_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.implemented_event_handlers"><code class="docutils literal notranslate"><span class="pre">NodeSet.implemented_event_handlers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.registered_events"><code class="docutils literal notranslate"><span class="pre">NodeSet.registered_events</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.is_nodeset"><code class="docutils literal notranslate"><span class="pre">NodeSet.is_nodeset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.add_child"><code class="docutils literal notranslate"><span class="pre">NodeSet.add_child()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.get_nodeset"><code class="docutils literal notranslate"><span class="pre">NodeSet.get_nodeset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.get_child_node_by_tag"><code class="docutils literal notranslate"><span class="pre">NodeSet.get_child_node_by_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.add_event"><code class="docutils literal notranslate"><span class="pre">NodeSet.add_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.get_event"><code class="docutils literal notranslate"><span class="pre">NodeSet.get_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.register_handler_to_event"><code class="docutils literal notranslate"><span class="pre">NodeSet.register_handler_to_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.register_interface_to_node"><code class="docutils literal notranslate"><span class="pre">NodeSet.register_interface_to_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.notify_handlers"><code class="docutils literal notranslate"><span class="pre">NodeSet.notify_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.consolidate_implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">NodeSet.consolidate_implemented_interfaces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSet.consolidate_implemented_handlers"><code class="docutils literal notranslate"><span class="pre">NodeSet.consolidate_implemented_handlers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig"><code class="docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig.is_nodeset_config"><code class="docutils literal notranslate"><span class="pre">NodeSetConfig.is_nodeset_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig.get_nodeset_config"><code class="docutils literal notranslate"><span class="pre">NodeSetConfig.get_nodeset_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig.__init__"><code class="docutils literal notranslate"><span class="pre">NodeSetConfig.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-quantcerebro.node">node</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.node.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.__init__"><code class="docutils literal notranslate"><span class="pre">Node.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.name"><code class="docutils literal notranslate"><span class="pre">Node.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">Node.implemented_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.implemented_event_handlers"><code class="docutils literal notranslate"><span class="pre">Node.implemented_event_handlers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.event_emitter"><code class="docutils literal notranslate"><span class="pre">Node.event_emitter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.registered_events"><code class="docutils literal notranslate"><span class="pre">Node.registered_events</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.registered_interfaces"><code class="docutils literal notranslate"><span class="pre">Node.registered_interfaces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.is_nodeset"><code class="docutils literal notranslate"><span class="pre">Node.is_nodeset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.add_event"><code class="docutils literal notranslate"><span class="pre">Node.add_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.get_event"><code class="docutils literal notranslate"><span class="pre">Node.get_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.register_handler_to_event"><code class="docutils literal notranslate"><span class="pre">Node.register_handler_to_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.notify_handlers"><code class="docutils literal notranslate"><span class="pre">Node.notify_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.register_interface_to_node"><code class="docutils literal notranslate"><span class="pre">Node.register_interface_to_node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.consolidate_implemented_handlers"><code class="docutils literal notranslate"><span class="pre">Node.consolidate_implemented_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.Node.consolidate_implemented_interfaces"><code class="docutils literal notranslate"><span class="pre">Node.consolidate_implemented_interfaces()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.node.NodeConfig"><code class="docutils literal notranslate"><span class="pre">NodeConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.NodeConfig.get_nodeset_config"><code class="docutils literal notranslate"><span class="pre">NodeConfig.get_nodeset_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.node.NodeConfig.__init__"><code class="docutils literal notranslate"><span class="pre">NodeConfig.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-quantcerebro.dependencies">dependency</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.dependencies.EdgeConfig"><code class="docutils literal notranslate"><span class="pre">EdgeConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.dependencies.EdgeConfig.__init__"><code class="docutils literal notranslate"><span class="pre">EdgeConfig.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.dependencies.Dependency"><code class="docutils literal notranslate"><span class="pre">Dependency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.dependencies.Dependency.__init__"><code class="docutils literal notranslate"><span class="pre">Dependency.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.dependencies.EventDependency"><code class="docutils literal notranslate"><span class="pre">EventDependency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.dependencies.EventDependency.__init__"><code class="docutils literal notranslate"><span class="pre">EventDependency.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.dependencies.CallableDependency"><code class="docutils literal notranslate"><span class="pre">CallableDependency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.dependencies.CallableDependency.__init__"><code class="docutils literal notranslate"><span class="pre">CallableDependency.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-quantcerebro.event">event</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.event.GraphEvent"><code class="docutils literal notranslate"><span class="pre">GraphEvent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.event.GraphEvent.__init__"><code class="docutils literal notranslate"><span class="pre">GraphEvent.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.event.GraphEvent.error_event"><code class="docutils literal notranslate"><span class="pre">GraphEvent.error_event</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantcerebro.event.GraphEvent.done_event"><code class="docutils literal notranslate"><span class="pre">GraphEvent.done_event</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.event.GraphEventEmitter"><code class="docutils literal notranslate"><span class="pre">GraphEventEmitter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-quantcerebro.utils">utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.utils.Singleton"><code class="docutils literal notranslate"><span class="pre">Singleton</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.utils.load_yaml"><code class="docutils literal notranslate"><span class="pre">load_yaml()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantcerebro.utils.load_class"><code class="docutils literal notranslate"><span class="pre">load_class()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">quantcerebro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>API Docs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-docs">
+<span id="api"></span><h1>API Docs<a class="headerlink" href="#api-docs" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="quantcerebro">
+<h2>quantcerebro<a class="headerlink" href="#quantcerebro" title="Permalink to this heading"></a></h2>
+<p>QuantCerebro is a Python package the provides configurable framework to describe relationships among business logics.
+The common relationship among business logic can be a. event; b. callable (interface).</p>
+<p>See docs for complete documentation.</p>
+</section>
+<span class="target" id="module-quantcerebro.__init__"></span><section id="builder">
+<h2>builder<a class="headerlink" href="#builder" title="Permalink to this heading"></a></h2>
+<p>Builder for Scenario: <a class="reference internal" href="#quantcerebro.nodeset.NodeSet" title="quantcerebro.nodeset.NodeSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code></a>, <a class="reference internal" href="#quantcerebro.node.Node" title="quantcerebro.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a> and Scenario Config: <a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig" title="quantcerebro.nodeset.NodeSetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></a>, <a class="reference internal" href="#quantcerebro.node.NodeConfig" title="quantcerebro.node.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeConfig</span></code></a>.</p>
+<p>There are two classes implemented: <a class="reference internal" href="#quantcerebro.builder.ConfigBuilder" title="quantcerebro.builder.ConfigBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigBuilder</span></code></a> and <a class="reference internal" href="#quantcerebro.builder.ScenarioBuilder" title="quantcerebro.builder.ScenarioBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScenarioBuilder</span></code></a></p>
+<section id="scenario-configuration">
+<h3>Scenario Configuration:<a class="headerlink" href="#scenario-configuration" title="Permalink to this heading"></a></h3>
+<p>Scenario Configuration is specified in yaml format, and takes the below construct.</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">nodesetClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">nodesetConfigClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">components</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">nodeClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">nodesetClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">edges</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pred</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">succ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">edgeType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">edgeClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">componentConfigs</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">configClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">      </span><span class="nt">nodesetPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+</pre></div>
+</div>
+</div></blockquote>
+<section id="configuration-file-keywords">
+<h4>Configuration File keywords:<a class="headerlink" href="#configuration-file-keywords" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: scenario name,</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>when a nodeset is a sub-scenario, the <code class="docutils literal notranslate"><span class="pre">component.name</span></code> defined in parent scenario will overwrite this name.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nodesetClass</span></code>: scenario class path, by default, you may specify as <a class="reference internal" href="#quantcerebro.nodeset.NodeSet" title="quantcerebro.nodeset.NodeSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">quantcerebro.nodeset.NodeSet</span></code></a></p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>when a nodeset is a sub-scenario, the <code class="docutils literal notranslate"><span class="pre">component.nodesetClass</span></code> defined in parent scenario will overwrite this field.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nodesetConfigClass</span></code>: scenario config class path, by default, you may specify as <a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig" title="quantcerebro.nodeset.NodeSetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">quantcerebro.nodeset.NodeSetConfig</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components</span></code>: component section, component can be a type <a class="reference internal" href="#quantcerebro.node.Node" title="quantcerebro.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>, or type <a class="reference internal" href="#quantcerebro.nodeset.NodeSet" title="quantcerebro.nodeset.NodeSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code></a></p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">components.name</span></code>: component name</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>this field is required to be unique in a scenario configuration setup.</p></li>
+<li><p>this field will overwrite <code class="docutils literal notranslate"><span class="pre">name</span></code> of a sub-scenario, as subscenario is identified by <code class="docutils literal notranslate"><span class="pre">componentConfigs.nodesetpath</span></code></p></li>
+</ul>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components.nodeClass</span></code>: node as a component, and this field specifies the class of the node</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components.nodesetClass</span></code>: nodeset as a component, and this field specifies the class of the nodeset</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this field will overwrite <code class="docutils literal notranslate"><span class="pre">nodesetClass</span></code> of a sub-scenario, where sub-scenario is identified by <code class="docutils literal notranslate"><span class="pre">componentConfigs.nodesetpath</span></code></p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: dependency section, which specifies dependencies among components</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges.pred</span></code>: predecessor component name</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>when component is a node, this is the node name</p></li>
+<li><p>when component is a nodeset, this is [nodeset name].[node name], though only the last [node name] matters.</p></li>
+</ul>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges.succ</span></code>: successor component name, same as edges.succ</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges.edgeType</span></code>: dependency type: <cite>callable</cite> or <cite>event</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges.edgeClass</span></code>: data class that handles the dependency data from pred to succ.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">componentConfigs</span></code>:     config section for component configs that used to initialise component a component</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">componentConfigs.name</span></code>:    component name as reference, there must be a one-to-one mapping with component section.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">componentConfigs.[...]</span></code>:   other user defined attributes when component is a node</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">componentConfigs.nodesetPath</span></code>:    nodeset’s path when component is a pre-defined nodeset</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<span class="target" id="module-quantcerebro.builder"></span><dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.builder.</span></span><span class="sig-name descname"><span class="pre">ScenarioBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeset_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Builds a composite scenario from composite config.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeset_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodeset_config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code>) – composite scenario config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.build_components">
+<span class="sig-name descname"><span class="pre">build_components</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.build_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.build_components" title="Permalink to this definition"></a></dt>
+<dd><p>instantiate child component level by level from the top. Stack keeps track of a nodeset by name and it’s child
+configs, while stack is not empty, add each element from stack to it’s parent nodeset. After components are
+instantiated, consolidate all implemented interfaces and implemented handlers. These two functions puts
+implemented interface (event handlers) into a dictionary, so it can be referenced.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>component name should be unique in a scenario</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the scenario with all child component instantiated, but no dependencies are registered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.add_component">
+<span class="sig-name descname"><span class="pre">add_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">switch_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.add_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.add_component" title="Permalink to this definition"></a></dt>
+<dd><p>add a scenario component to current nodeset level, when switch_to is true and current component is a nodeset, switch to this nodeset branch
+:type component: <code class="xref py py-class docutils literal notranslate"><span class="pre">ScenarioComponent</span></code>
+:param component: scenario component
+:type switch_to: <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>
+:param switch_to: whether to switch to the added nodeset or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.build_edges">
+<span class="sig-name descname"><span class="pre">build_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.build_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.build_edges" title="Permalink to this definition"></a></dt>
+<dd><p>register configured dependnecies level by level. Stack keeps track of a nodeset by name and it’s child  configs,
+edge_stack keep tracks a nodeset, and it’s child config dependencies. After edge_stack is fully populated,
+iterate through and register dependencies one by one
+:rtype: <code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code>
+:return: the scenario with all dependencies built</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.add_edge" title="Permalink to this definition"></a></dt>
+<dd><p>add a dependency to a nodeset</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.set_current_nodeset">
+<span class="sig-name descname"><span class="pre">set_current_nodeset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.set_current_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.set_current_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>set current nodeset pointer to the input</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.init_component_with_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init_component_with_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.init_component_with_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.init_component_with_config" title="Permalink to this definition"></a></dt>
+<dd><p>takes in a config of scenario component, and build it
+:type config: <code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code>
+:param config: either type <a class="reference internal" href="#quantcerebro.node.NodeConfig" title="quantcerebro.node.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeConfig</span></code></a> or type <a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig" title="quantcerebro.nodeset.NodeSetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></a>
+:rtype: <code class="xref py py-class docutils literal notranslate"><span class="pre">ScenarioComponent</span></code>
+:return: child component of scenario</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ScenarioBuilder.name_check">
+<span class="sig-name descname"><span class="pre">name_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ScenarioBuilder.name_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ScenarioBuilder.name_check" title="Permalink to this definition"></a></dt>
+<dd><p>check if name is already used</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.builder.ConfigBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.builder.</span></span><span class="sig-name descname"><span class="pre">ConfigBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ConfigBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ConfigBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>ConfigBuilder takes in a yaml file, and returns a composite configuration <a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig" title="quantcerebro.nodeset.NodeSetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – configuration file location</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ConfigBuilder.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ConfigBuilder.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ConfigBuilder.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ConfigBuilder.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ConfigBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ConfigBuilder.build" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>NodeSetConfig</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.builder.ConfigBuilder.process_dict">
+<span class="sig-name descname"><span class="pre">process_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/builder.html#ConfigBuilder.process_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.builder.ConfigBuilder.process_dict" title="Permalink to this definition"></a></dt>
+<dd><p>the instantiated dictionary from yaml file is not in composite format, so this preprocessing step assembles it
+into a correct format
+:type config_dict: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param config_dict: the raw format of yaml dictionary
+:return: returns a composite patterned dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="meta">
+<h2>meta<a class="headerlink" href="#meta" title="Permalink to this heading"></a></h2>
+<p>This section implements the meta classes for quantcerebro components.
+It defines the skeleton of attributes and functionality a class component should implement.</p>
+<span class="target" id="module-quantcerebro.meta"></span><dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.meta.</span></span><span class="sig-name descname"><span class="pre">PredecessorTemplate</span></span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate" title="Permalink to this definition"></a></dt>
+<dd><p>Predecessor Abstract Class for a scenario component</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.name" title="Permalink to this definition"></a></dt>
+<dd><p>name of the predecessor scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.implemented_interfaces">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ImplementedInterfaceType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>interface implemented by a Predecessor scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ImplementedInterfaceType</span></code>)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.event_emitter">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_emitter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">GraphEventEmitter</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.event_emitter" title="Permalink to this definition"></a></dt>
+<dd><p>event emitter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">GraphEventEmitter</span></code>)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.registered_events">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_events</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">GraphEvent</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.registered_events" title="Permalink to this definition"></a></dt>
+<dd><p>events registered in Predecessor Scenario Component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">GraphEvent</span></code>)]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.add_event">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate.add_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.add_event" title="Permalink to this definition"></a></dt>
+<dd><p>create an event to component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.get_event">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate.get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.get_event" title="Permalink to this definition"></a></dt>
+<dd><p>get a event by name from a component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">GraphEvent</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.register_handler_to_event">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_handler_to_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate.register_handler_to_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.register_handler_to_event" title="Permalink to this definition"></a></dt>
+<dd><p>register event handler to a event of a component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.notify_handlers">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notify_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate.notify_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.notify_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>for a event of node, notify to it’s registered handlers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.PredecessorTemplate.consolidate_implemented_interfaces">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">consolidate_implemented_interfaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#PredecessorTemplate.consolidate_implemented_interfaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.PredecessorTemplate.consolidate_implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>manually register implemented interface to a dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.meta.</span></span><span class="sig-name descname"><span class="pre">SuccessorTemplate</span></span><a class="reference internal" href="_modules/quantcerebro/meta.html#SuccessorTemplate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate" title="Permalink to this definition"></a></dt>
+<dd><p>Successor Abstract Class for a scenario component</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate.name" title="Permalink to this definition"></a></dt>
+<dd><p>name of successor  scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate.registered_interfaces">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">RegisteredInterfaceType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate.registered_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>registered interfaces to Successor Scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">RegisteredInterfaceType</span></code>)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate.implemented_event_handlers">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_event_handlers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ImplementedHandlerType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate.implemented_event_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>implemented event handlers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ImplementedHandlerType</span></code>)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate.register_interface_to_node">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_interface_to_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#SuccessorTemplate.register_interface_to_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate.register_interface_to_node" title="Permalink to this definition"></a></dt>
+<dd><p>register a predecessor interface to successor scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.SuccessorTemplate.consolidate_implemented_handlers">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">consolidate_implemented_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#SuccessorTemplate.consolidate_implemented_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.SuccessorTemplate.consolidate_implemented_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>manually register implemented handlers to a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.meta.ScenarioComponent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.meta.</span></span><span class="sig-name descname"><span class="pre">ScenarioComponent</span></span><a class="reference internal" href="_modules/quantcerebro/meta.html#ScenarioComponent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.ScenarioComponent" title="Permalink to this definition"></a></dt>
+<dd><p>Scenario Component has two child implementation. <a class="reference internal" href="#quantcerebro.node.Node" title="quantcerebro.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a> and <a class="reference internal" href="#quantcerebro.nodeset.NodeSet" title="quantcerebro.nodeset.NodeSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code></a>
+Scenario Component is an abstract class that inherents from <a class="reference internal" href="#quantcerebro.meta.PredecessorTemplate" title="quantcerebro.meta.PredecessorTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">PredecessorTemplate</span></code></a> and <a class="reference internal" href="#quantcerebro.meta.SuccessorTemplate" title="quantcerebro.meta.SuccessorTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SuccessorTemplate</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.ScenarioComponent.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#ScenarioComponent.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.ScenarioComponent.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.meta.ScenarioComponent.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#quantcerebro.meta.ScenarioComponent.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of Scenario Compoment, by default, it’s taken from scenario config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.ScenarioComponent.is_nodeset">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_nodeset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#ScenarioComponent.is_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.ScenarioComponent.is_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>if the current scenario is a nodeset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.ScenarioComponent.get_nodeset">
+<span class="sig-name descname"><span class="pre">get_nodeset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#ScenarioComponent.get_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.ScenarioComponent.get_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>get a child nodeset by name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">NodeSet</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.meta.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.meta.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.Config" title="Permalink to this definition"></a></dt>
+<dd><p>Base class for Scenario Component Configurations, there are two child implementations, <a class="reference internal" href="#quantcerebro.nodeset.NodeSetConfig" title="quantcerebro.nodeset.NodeSetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSetConfig</span></code></a> and <a class="reference internal" href="#quantcerebro.node.NodeConfig" title="quantcerebro.node.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeConfig</span></code></a>.
+:type name: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param name: name of the config
+:type config_class: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param config_class: the string path to designinated Config Class
+:param parent: not a required param, by default it’s None, and set at runtime by scenario config</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.Config.is_nodeset_config">
+<span class="sig-name descname"><span class="pre">is_nodeset_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#Config.is_nodeset_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.Config.is_nodeset_config" title="Permalink to this definition"></a></dt>
+<dd><p>is current configuration a nodeset config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.Config.get_nodeset_config">
+<span class="sig-name descname"><span class="pre">get_nodeset_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/meta.html#Config.get_nodeset_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.meta.Config.get_nodeset_config" title="Permalink to this definition"></a></dt>
+<dd><p>get child nodest config by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.meta.Config.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.meta.Config.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-quantcerebro.nodeset">
+<span id="nodeset"></span><h2>nodeset<a class="headerlink" href="#module-quantcerebro.nodeset" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.nodeset.</span></span><span class="sig-name descname"><span class="pre">NodeSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeset_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeset_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of Scenario Compoment, by default, it’s taken from scenario config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.implemented_interfaces">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>interface implemented by a Predecessor scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.event_emitter">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_emitter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.event_emitter" title="Permalink to this definition"></a></dt>
+<dd><p>event emitter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.registered_interfaces">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.registered_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>registered interfaces to Successor Scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.implemented_event_handlers">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_event_handlers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.implemented_event_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>implemented event handlers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.registered_events">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_events</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><span class="pre">GraphEvent</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.registered_events" title="Permalink to this definition"></a></dt>
+<dd><p>events registered in Predecessor Scenario Component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphEvent</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.is_nodeset">
+<span class="sig-name descname"><span class="pre">is_nodeset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.is_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.is_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>if the current scenario is a nodeset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.add_child">
+<span class="sig-name descname"><span class="pre">add_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.add_child"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.add_child" title="Permalink to this definition"></a></dt>
+<dd><p>attach child component, and set the component’s parent to <code class="docutils literal notranslate"><span class="pre">self</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.get_nodeset">
+<span class="sig-name descname"><span class="pre">get_nodeset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.get_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.get_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>get a child nodeset by name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quantcerebro.nodeset.NodeSet" title="quantcerebro.nodeset.NodeSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeSet</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.get_child_node_by_tag">
+<span class="sig-name descname"><span class="pre">get_child_node_by_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.get_child_node_by_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.get_child_node_by_tag" title="Permalink to this definition"></a></dt>
+<dd><p>get child node by dependency tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.add_event">
+<span class="sig-name descname"><span class="pre">add_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.add_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.add_event" title="Permalink to this definition"></a></dt>
+<dd><p>create an event to component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.get_event">
+<span class="sig-name descname"><span class="pre">get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.get_event" title="Permalink to this definition"></a></dt>
+<dd><p>get a event by name from a component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.register_handler_to_event">
+<span class="sig-name descname"><span class="pre">register_handler_to_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.register_handler_to_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.register_handler_to_event" title="Permalink to this definition"></a></dt>
+<dd><p>register event handler to a event of a component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.register_interface_to_node">
+<span class="sig-name descname"><span class="pre">register_interface_to_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.register_interface_to_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.register_interface_to_node" title="Permalink to this definition"></a></dt>
+<dd><p>register a predecessor interface to successor scenario component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.notify_handlers">
+<span class="sig-name descname"><span class="pre">notify_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.notify_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.notify_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>for a event of node, notify to it’s registered handlers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.consolidate_implemented_interfaces">
+<span class="sig-name descname"><span class="pre">consolidate_implemented_interfaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.consolidate_implemented_interfaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.consolidate_implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>manually register implemented interface to a dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSet.consolidate_implemented_handlers">
+<span class="sig-name descname"><span class="pre">consolidate_implemented_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSet.consolidate_implemented_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSet.consolidate_implemented_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>manually register implemented handlers to a dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.nodeset.</span></span><span class="sig-name descname"><span class="pre">NodeSetConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodeset_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSetConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSetConfig" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSetConfig.is_nodeset_config">
+<span class="sig-name descname"><span class="pre">is_nodeset_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSetConfig.is_nodeset_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSetConfig.is_nodeset_config" title="Permalink to this definition"></a></dt>
+<dd><p>is current configuration a nodeset config</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSetConfig.get_nodeset_config">
+<span class="sig-name descname"><span class="pre">get_nodeset_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/nodeset.html#NodeSetConfig.get_nodeset_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.nodeset.NodeSetConfig.get_nodeset_config" title="Permalink to this definition"></a></dt>
+<dd><p>get child nodest config by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.nodeset.NodeSetConfig.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodeset_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.nodeset.NodeSetConfig.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-quantcerebro.node">
+<span id="node"></span><h2>node<a class="headerlink" href="#module-quantcerebro.node" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.node.Node">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.node.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#quantcerebro.node.Node.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of Scenario Compoment, by default, it’s taken from scenario config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.implemented_interfaces">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ImplementedInterfaceType</span></em><a class="headerlink" href="#quantcerebro.node.Node.implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>interface implemented by a Predecessor scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ImplementedInterfaceType</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.implemented_event_handlers">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implemented_event_handlers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ImplementedHandlerType</span></em><a class="headerlink" href="#quantcerebro.node.Node.implemented_event_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>implemented event handlers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ImplementedHandlerType</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.event_emitter">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_emitter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#quantcerebro.event.GraphEventEmitter" title="quantcerebro.event.GraphEventEmitter"><span class="pre">GraphEventEmitter</span></a></em><a class="headerlink" href="#quantcerebro.node.Node.event_emitter" title="Permalink to this definition"></a></dt>
+<dd><p>event emitter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quantcerebro.event.GraphEventEmitter" title="quantcerebro.event.GraphEventEmitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphEventEmitter</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.registered_events">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_events</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><span class="pre">GraphEvent</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#quantcerebro.node.Node.registered_events" title="Permalink to this definition"></a></dt>
+<dd><p>events registered in Predecessor Scenario Component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphEvent</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.registered_interfaces">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RegisteredInterfaceType</span></em><a class="headerlink" href="#quantcerebro.node.Node.registered_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>registered interfaces to Successor Scenario component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">RegisteredInterfaceType</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.is_nodeset">
+<span class="sig-name descname"><span class="pre">is_nodeset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.is_nodeset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.is_nodeset" title="Permalink to this definition"></a></dt>
+<dd><p>if the current scenario is a nodeset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.add_event">
+<span class="sig-name descname"><span class="pre">add_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.add_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.add_event" title="Permalink to this definition"></a></dt>
+<dd><p>create an event to component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.get_event">
+<span class="sig-name descname"><span class="pre">get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.get_event" title="Permalink to this definition"></a></dt>
+<dd><p>get a event by name from a component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quantcerebro.event.GraphEvent" title="quantcerebro.event.GraphEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphEvent</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.register_handler_to_event">
+<span class="sig-name descname"><span class="pre">register_handler_to_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.register_handler_to_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.register_handler_to_event" title="Permalink to this definition"></a></dt>
+<dd><p>register event handler to a event of a component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.notify_handlers">
+<span class="sig-name descname"><span class="pre">notify_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.notify_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.notify_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>for a event of node, notify to it’s registered handlers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.register_interface_to_node">
+<span class="sig-name descname"><span class="pre">register_interface_to_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.register_interface_to_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.register_interface_to_node" title="Permalink to this definition"></a></dt>
+<dd><p>register a predecessor interface to successor scenario component</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.consolidate_implemented_handlers">
+<span class="sig-name descname"><span class="pre">consolidate_implemented_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.consolidate_implemented_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.consolidate_implemented_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>keep implemented handlers into one dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.Node.consolidate_implemented_interfaces">
+<span class="sig-name descname"><span class="pre">consolidate_implemented_interfaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#Node.consolidate_implemented_interfaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.Node.consolidate_implemented_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>keep implemented interface into one dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.node.NodeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.node.</span></span><span class="sig-name descname"><span class="pre">NodeConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#NodeConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.NodeConfig" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.NodeConfig.get_nodeset_config">
+<span class="sig-name descname"><span class="pre">get_nodeset_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/node.html#NodeConfig.get_nodeset_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.node.NodeConfig.get_nodeset_config" title="Permalink to this definition"></a></dt>
+<dd><p>get child nodest config by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.node.NodeConfig.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.node.NodeConfig.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-quantcerebro.dependencies">
+<span id="dependency"></span><h2>dependency<a class="headerlink" href="#module-quantcerebro.dependencies" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.EdgeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.dependencies.</span></span><span class="sig-name descname"><span class="pre">EdgeConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_dataclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/dependencies.html#EdgeConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.dependencies.EdgeConfig" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.EdgeConfig.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_dataclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.dependencies.EdgeConfig.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.Dependency">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.dependencies.</span></span><span class="sig-name descname"><span class="pre">Dependency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/dependencies.html#Dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.dependencies.Dependency" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.Dependency.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.dependencies.Dependency.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.EventDependency">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.dependencies.</span></span><span class="sig-name descname"><span class="pre">EventDependency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_data_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/dependencies.html#EventDependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.dependencies.EventDependency" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.EventDependency.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_data_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.dependencies.EventDependency.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.CallableDependency">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.dependencies.</span></span><span class="sig-name descname"><span class="pre">CallableDependency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_data_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/dependencies.html#CallableDependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.dependencies.CallableDependency" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.dependencies.CallableDependency.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">succ_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_data_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quantcerebro.dependencies.CallableDependency.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-quantcerebro.event">
+<span id="event"></span><h2>event<a class="headerlink" href="#module-quantcerebro.event" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.event.GraphEvent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.event.</span></span><span class="sig-name descname"><span class="pre">GraphEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_with_error_done_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/event.html#GraphEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.event.GraphEvent" title="Permalink to this definition"></a></dt>
+<dd><p>Event Between Nodes on a graph level</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="quantcerebro.event.GraphEvent.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_with_error_done_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/event.html#GraphEvent.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.event.GraphEvent.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="quantcerebro.event.GraphEvent.error_event">
+<span class="sig-name descname"><span class="pre">error_event</span></span><a class="headerlink" href="#quantcerebro.event.GraphEvent.error_event" title="Permalink to this definition"></a></dt>
+<dd><p>Sub event that emits errors from this event as
+<code class="docutils literal notranslate"><span class="pre">emit(source,</span> <span class="pre">exception)</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="quantcerebro.event.GraphEvent.done_event">
+<span class="sig-name descname"><span class="pre">done_event</span></span><a class="headerlink" href="#quantcerebro.event.GraphEvent.done_event" title="Permalink to this definition"></a></dt>
+<dd><p>Sub event that emits when this event is done as
+<code class="docutils literal notranslate"><span class="pre">emit(source)</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.event.GraphEventEmitter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.event.</span></span><span class="sig-name descname"><span class="pre">GraphEventEmitter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/event.html#GraphEventEmitter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.event.GraphEventEmitter" title="Permalink to this definition"></a></dt>
+<dd><p>A very basic realisation of NodeJS’s event emitter to keep track of GraphEvents</p>
+</dd></dl>
+
+</section>
+<section id="module-quantcerebro.utils">
+<span id="utils"></span><h2>utils<a class="headerlink" href="#module-quantcerebro.utils" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quantcerebro.utils.Singleton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quantcerebro.utils.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><a class="reference internal" href="_modules/quantcerebro/utils.html#Singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.utils.Singleton" title="Permalink to this definition"></a></dt>
+<dd><ul class="simple">
+<li><dl class="simple">
+<dt>usage:</dt><dd><dl class="simple">
+<dt>class A(metaclass=Singleton):</dt><dd><p>…</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="quantcerebro.utils.load_yaml">
+<span class="sig-prename descclassname"><span class="pre">quantcerebro.utils.</span></span><span class="sig-name descname"><span class="pre">load_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/utils.html#load_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.utils.load_yaml" title="Permalink to this definition"></a></dt>
+<dd><p>read yaml file into dictionary
+:type file: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param file: “yaml/file/path”
+:rtype: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:return: dictionary of file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="quantcerebro.utils.load_class">
+<span class="sig-prename descclassname"><span class="pre">quantcerebro.utils.</span></span><span class="sig-name descname"><span class="pre">load_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/quantcerebro/utils.html#load_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quantcerebro.utils.load_class" title="Permalink to this definition"></a></dt>
+<dd><p>load class object from class path
+:type path: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param path: “path.to.the.class”
+:return: class object</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to quantcerebro’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2022, The QuantCerebro Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
